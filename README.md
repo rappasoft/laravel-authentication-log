@@ -109,7 +109,11 @@ Get the user's last login information:
 ```php
 User::find(1)->lastLoginAt();
 
+User::find(1)->lastSuccessfulLoginAt();
+
 User::find(1)->lastLoginIp();
+
+User::find(1)->lastSuccessfulLoginIp();
 ```
 
 Get the user's previous login time & IP address (ignoring the current login):
