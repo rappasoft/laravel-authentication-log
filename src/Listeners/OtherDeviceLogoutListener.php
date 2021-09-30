@@ -8,7 +8,6 @@ use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
 
 class OtherDeviceLogoutListener
 {
-
     public Request $request;
 
     public function __construct(Request $request)
@@ -35,11 +34,10 @@ class OtherDeviceLogoutListener
                 if ($log->id !== $authenticationLog->id) {
                     $log->update([
                         'cleared_by_user' => true,
-                        'logout_at'       => now(),
+                        'logout_at' => now(),
                     ]);
                 }
             }
         }
     }
 }
-

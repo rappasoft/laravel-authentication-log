@@ -28,7 +28,7 @@ class FailedLogin extends Notification implements ShouldQueue
 
     public function toMail($notifiable)
     {
-        return (new MailMessage)
+        return (new MailMessage())
             ->subject(__('A failed login to your account'))
             ->markdown('authentication-log::emails.failed', [
                 'account' => $notifiable,
@@ -41,7 +41,7 @@ class FailedLogin extends Notification implements ShouldQueue
 
     public function toSlack($notifiable)
     {
-        return (new SlackMessage)
+        return (new SlackMessage())
             ->from(config('app.name'))
             ->warning()
             ->content(__('There has been a failed login attempt to your :app account.', ['app' => config('app.name')]))
@@ -62,7 +62,7 @@ class FailedLogin extends Notification implements ShouldQueue
 
     public function toNexmo($notifiable)
     {
-        return (new NexmoMessage)
+        return (new NexmoMessage())
             ->content(__('There has been a failed login attempt to your :app account.', ['app' => config('app.name')]));
     }
 }

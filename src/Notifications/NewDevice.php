@@ -28,7 +28,7 @@ class NewDevice extends Notification implements ShouldQueue
 
     public function toMail($notifiable)
     {
-        return (new MailMessage)
+        return (new MailMessage())
             ->subject(__('Your :app account logged in from a new device.', ['app' => config('app.name')]))
             ->markdown('authentication-log::emails.new', [
                 'account' => $notifiable,
@@ -41,7 +41,7 @@ class NewDevice extends Notification implements ShouldQueue
 
     public function toSlack($notifiable)
     {
-        return (new SlackMessage)
+        return (new SlackMessage())
             ->from(config('app.name'))
             ->warning()
             ->content(__('Your :app account logged in from a new device.', ['app' => config('app.name')]))
@@ -62,7 +62,7 @@ class NewDevice extends Notification implements ShouldQueue
 
     public function toNexmo($notifiable)
     {
-        return (new NexmoMessage)
+        return (new NexmoMessage())
             ->content(__('Your :app account logged in from a new device.', ['app' => config('app.name')]));
     }
 }
