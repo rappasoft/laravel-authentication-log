@@ -4,4 +4,4 @@ All notable changes to `Laravel Authentication Log` will be documented in this f
 
 ## 1.0.0 - 202X-XX-XX
 
-- initial release
+- Initial Release

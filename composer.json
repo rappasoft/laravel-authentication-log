@@ -18,8 +18,7 @@
     "require": {
         "php": "^8.0",
         "illuminate/contracts": "^8.37",
-        "spatie/laravel-package-tools": "^1.4.3",
-        "torann/geoip": "^3.0"
+        "spatie/laravel-package-tools": "^1.4.3"
     },
     "require-dev": {
         "nunomaduro/collision": "^5.3",
