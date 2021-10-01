@@ -1,24 +1,24 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "rappasoft/laravel-authentication-log",
+    "description": "Log user authentication details and send new device notifications.",
     "keywords": [
-        ":vendor_name",
+        "rappasoft",
         "laravel",
-        ":package_slug"
+        "laravel-authentication-log"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/rappasoft/laravel-authentication-log",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Anthony Rappa",
+            "email": "rappa819@gmail.com",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.0",
-        "spatie/laravel-package-tools": "^1.4.3",
-        "illuminate/contracts": "^8.37"
+        "illuminate/contracts": "^8.37",
+        "spatie/laravel-package-tools": "^1.4.3"
     },
     "require-dev": {
         "nunomaduro/collision": "^5.3",
@@ -30,13 +30,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Rappasoft\\LaravelAuthenticationLog\\": "src",
+            "Rappasoft\\LaravelAuthenticationLog\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "Rappasoft\\LaravelAuthenticationLog\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -49,11 +49,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
-            ],
-            "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\SkeletonFacade"
-            }
+                "Rappasoft\\LaravelAuthenticationLog\\LaravelAuthenticationLogServiceProvider"
+            ]
         }
     },
     "minimum-stability": "dev",
