@@ -227,7 +227,7 @@ class AuthenticationLog extends DataTableComponent
                         ->orWhere('location->state_name', 'like', '%'.$searchTerm.'%')
                         ->orWhere('location->postal_code', 'like', '%'.$searchTerm.'%');
                 })
-                ->format(fn($value) => $value['default'] === false ? $value['city'] . ', ' . $value['state'] : '-'),
+                ->format(fn ($value) => $value && $value['default'] === false ? $value['city'] . ', ' . $value['state'] : '-'),
             Column::make('Login At')
                 ->sortable()
                 ->format(fn($value) => $value ? timezone()->convertToLocal($value) : '-'),
