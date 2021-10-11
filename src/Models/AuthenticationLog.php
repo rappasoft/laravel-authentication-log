@@ -11,6 +11,8 @@ class AuthenticationLog extends Model
 
     protected $table = 'authentication_log';
 
+    protected $connection = null;
+
     protected $fillable = [
         'ip_address',
         'user_agent',
@@ -31,6 +33,13 @@ class AuthenticationLog extends Model
         'login_at',
         'logout_at',
     ];
+
+    public function __construct()
+    {
+        if (! $this->connection) {
+            $this->connection = config('authentication-log.db_connection', env('DB_CONNECTION', 'mysql'));
+        }
+    }
 
     public function getTable()
     {
