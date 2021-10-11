@@ -260,6 +260,10 @@ Example:
 
 ![Example Log Table](https://imgur.com/B4DlN4W.png)
 
+## Known Issues
+
+- [This cache store is not supported. - torann/geoip](https://github.com/Torann/laravel-geoip/issues/147#issuecomment-528414630)
+
 ## Testing
 
 ```bash
