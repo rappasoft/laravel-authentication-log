@@ -32,6 +32,15 @@ class AuthenticationLog extends Model
         'logout_at',
     ];
 
+    public function __construct(array $attributes = [])
+    {
+        if (! isset($this->connection)) {
+            $this->setConnection(config('authentication-log.db_connection'));
+        }
+
+        parent::__construct($attributes);
+    }
+
     public function getTable()
     {
         return config('authentication-log.table_name', parent::getTable());

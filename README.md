@@ -46,6 +46,9 @@ return [
     // You can change this if the database keys get too long for your driver
     'table_name' => 'authentication_log',
 
+    // The database connection where the authentication_log table resides. Leave empty to use the default
+    'db_connection' => null,
+
     'notifications' => [
         'new-device' => [
             // Send the NewDevice notification
@@ -227,7 +230,7 @@ class AuthenticationLog extends DataTableComponent
                         ->orWhere('location->state_name', 'like', '%'.$searchTerm.'%')
                         ->orWhere('location->postal_code', 'like', '%'.$searchTerm.'%');
                 })
-                ->format(fn($value) => $value['default'] === false ? $value['city'] . ', ' . $value['state'] : '-'),
+                ->format(fn ($value) => $value && $value['default'] === false ? $value['city'] . ', ' . $value['state'] : '-'),
             Column::make('Login At')
                 ->sortable()
                 ->format(fn($value) => $value ? timezone()->convertToLocal($value) : '-'),
@@ -259,6 +262,10 @@ class AuthenticationLog extends DataTableComponent
 Example:
 
 ![Example Log Table](https://imgur.com/B4DlN4W.png)
+
+## Known Issues
+
+- [This cache store is not supported. - torann/geoip](https://github.com/Torann/laravel-geoip/issues/147#issuecomment-528414630)
 
 ## Testing
 
