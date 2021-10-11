@@ -10,7 +10,7 @@ class AuthenticationLog extends Model
     public $timestamps = false;
 
     protected $table = 'authentication_log';
-
+    
     protected $fillable = [
         'ip_address',
         'user_agent',
@@ -31,6 +31,15 @@ class AuthenticationLog extends Model
         'login_at',
         'logout_at',
     ];
+
+    public function __construct(array $attributes = [])
+    {
+        if (! isset($this->connection)) {
+            $this->setConnection(config('authentication-log.db_connection'));
+        }
+
+        parent::__construct($attributes);
+    }
 
     public function getTable()
     {

@@ -5,6 +5,9 @@ return [
     // You can change this if the database keys get too long for your driver
     'table_name' => 'authentication_log',
 
+    // The database connection where the authentication_log table resides. Leave empty to use the default
+    'db_connection' => null,
+
     'notifications' => [
         'new-device' => [
             // Send the NewDevice notification
