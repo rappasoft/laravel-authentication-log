@@ -10,7 +10,7 @@ class AuthenticationLog extends Model
     public $timestamps = false;
 
     protected $table = 'authentication_log';
-    
+
     protected $fillable = [
         'ip_address',
         'user_agent',
