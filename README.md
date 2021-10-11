@@ -46,7 +46,7 @@ return [
     // You can change this if the database keys get too long for your driver
     'table_name' => 'authentication_log',
 
-    // the database connection where the authentication_log table resides. leave empty to use the default
+    // The database connection where the authentication_log table resides. Leave empty to use the default
     'db_connection' => null,
 
     'notifications' => [
