@@ -22,7 +22,7 @@ class LoginListener
             $user = $event->user;
             $ip = $this->request->ip();
             $userAgent = $this->request->userAgent();
-            $known = $user->authentications()->whereIpAddress($ip)->whereUserAgent($userAgent)->where('login_successful', true)->first();
+            $known = $user->authentications()->whereIpAddress($ip)->whereUserAgent($userAgent)->whereLoginSuccessful(true)->first();
             $newUser = Carbon::parse($user->{$user->getCreatedAtColumn()})->diffInMinutes(Carbon::now()) < 1;
 
             $log = $user->authentications()->create([
