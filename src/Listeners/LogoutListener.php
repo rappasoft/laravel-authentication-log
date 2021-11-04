@@ -8,7 +8,12 @@ use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
 
 class LogoutListener
 {
-    public Request $request;
+    /**
+     * The request.
+     *
+     * @var \Illuminate\Http\Request
+     */
+    public $request;
 
     public function __construct(Request $request)
     {

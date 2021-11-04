@@ -14,7 +14,12 @@ class NewDevice extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public AuthenticationLog $authenticationLog;
+    /**
+     * The request.
+     *
+     * @var \Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog
+     */
+    public $authenticationLog;
 
     public function __construct(AuthenticationLog $authenticationLog)
     {

@@ -9,7 +9,12 @@ use Rappasoft\LaravelAuthenticationLog\Notifications\NewDevice;
 
 class LoginListener
 {
-    public Request $request;
+    /**
+     * The request.
+     *
+     * @var \Illuminate\Http\Request
+     */
+    public $request;
 
     public function __construct(Request $request)
     {
