@@ -1,0 +1,15 @@
+{
+    "A failed login to your account": "Échec de la connexion à votre compte",
+    "Account": "Compte",
+    "Browser": "Navigateur",
+    "Hello": "Bonjour",
+    "If this was you, you can ignore this alert. If you suspect any suspicious activity on your account, please change your password.": "Si c’était vous, vous pouvez ignorer cette alerte. Si vous soupçonnez une activité suspecte sur votre compte, veuillez modifier votre mot de passe.",
+    "IP Address": "Adresse IP",
+    "Location": "Emplacement",
+    "Unknown City": "Ville inconnue",
+    "Unknown State": "État inconnu",
+    "Regards": "Cordialement",
+    "There has been a failed login attempt to your :app account.": "Une tentative de connexion à votre compte sur :app a échoué.",
+    "Time": "Heure",
+    "Your :app account logged in from a new device.": "Connexion à votre compte sur :app depuis un nouvel appareil."
+}
