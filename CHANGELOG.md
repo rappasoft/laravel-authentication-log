@@ -2,6 +2,12 @@
 
 All notable changes to `Laravel Authentication Log` will be documented in this file.
 
+### 1.3.0 - 2021-11-XX
+
+### Added
+
+- Added french translation and location fallbacks - https://github.com/rappasoft/laravel-authentication-log/pull/18
+
 ### 1.2.0 - 2021-11-01
 
 ### Added
