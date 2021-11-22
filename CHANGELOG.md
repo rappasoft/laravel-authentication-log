@@ -7,6 +7,7 @@ All notable changes to `Laravel Authentication Log` will be documented in this f
 ### Added
 
 - Added french translation and missing location translations - https://github.com/rappasoft/laravel-authentication-log/pull/18
+- Fire a successful login after a failed login on an unknown (new) device. - https://github.com/rappasoft/laravel-authentication-log/pull/15
 
 ### 1.2.0 - 2021-11-01
 
