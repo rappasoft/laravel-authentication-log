@@ -16,8 +16,12 @@ class LoginListener
         $this->request = $request;
     }
 
-    public function handle(Login $event): void
+    public function handle($event): void
     {
+        if (! $event instanceof (config('authentication-log.events.login') ?? Login::class)) {
+            return;
+        }
+
         if ($event->user) {
             $user = $event->user;
             $ip = $this->request->ip();
