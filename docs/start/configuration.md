@@ -32,6 +32,14 @@ return [
 
     // The database connection where the authentication_log table resides. Leave empty to use the default
     'db_connection' => null,
+    
+    // The events the package listens for to log (as of v1.3)
+    'events' => [
+        'login' => \Illuminate\Auth\Events\Login::class,
+        'failed' => \Illuminate\Auth\Events\Failed::class,
+        'logout' => \Illuminate\Auth\Events\Logout::class,
+        'logout-other-devices' => \Illuminate\Auth\Events\OtherDeviceLogout::class,
+    ],
 
     'notifications' => [
         'new-device' => [
@@ -84,3 +92,88 @@ class User extends Authenticatable
 ```
 
 The package will listen for Laravel's Login, Logout, Failed, and OtherDeviceLogout events.
+
+## Overriding default Laravel events
+
+If you would like to listen to your own events you may override them in the package config (as of v1.3).
+
+### Example event override
+
+You may notice that Laravel [fires a Login event when the session renews](https://github.com/laravel/framework/blob/master/src/Illuminate/Auth/SessionGuard.php#L149) if the user clicked 'remember me' when logging in. This will produce empty login rows each time which is not what we want. The way around this is to fire your own `Login` event instead of listening for Laravels.
+
+You can create a Login event that takes the user:
+
+```php
+<?php
+
+namespace App\Domains\Auth\Events;
+
+use Illuminate\Queue\SerializesModels;
+
+class Login
+{
+    use SerializesModels;
+
+    public $user;
+
+    public function __construct($user)
+    {
+        $this->user = $user;
+    }
+}
+```
+
+Then override it in the package config:
+
+```php
+// The events the package listens for to log
+'events' => [
+    'login' => \App\Domains\Auth\Events\Login::class,
+    ...
+],
+```
+
+Then call it where you login your user:
+
+```php
+event(new Login($user));
+```
+
+Now the package will only register actual login events, and not session re-authentications.
+
+### Overriding in Fortify
+
+If you are working with Fortify and would like to register your own Login event, you can append a class to the authentication stack:
+
+In FortifyServiceProvider:
+
+```php
+Fortify::authenticateThrough(function () {
+    return array_filter([
+        ...
+        FireLoginEvent::class,
+    ]);
+});
+```
+
+`FireLoginEvent` is just a class that fires the event:
+
+```php
+<?php
+
+namespace App\Domains\Auth\Actions;
+
+use App\Domains\Auth\Events\Login;
+
+class FireLoginEvent
+{
+    public function handle($request, $next)
+    {
+        if ($request->user()) {
+            event(new Login($request->user()));
+        }
+
+        return $next($request);
+    }
+}
+```

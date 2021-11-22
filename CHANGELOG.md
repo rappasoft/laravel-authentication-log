@@ -2,6 +2,15 @@
 
 All notable changes to `Laravel Authentication Log` will be documented in this file.
 
+### 1.2.0 - 2021-11-21
+
+### Added
+
+- Fire a successful login after a failed login on an unknown (new) device. - https://github.com/rappasoft/laravel-authentication-log/pull/15
+- Make the events the package is listening for configurable in the config file
+- Added French translation and missing location translations - https://github.com/rappasoft/laravel-authentication-log/pull/18
+- PHP 7.4 Support
+
 ### 1.1.1 - 2021-10-20
 
 ### Changed

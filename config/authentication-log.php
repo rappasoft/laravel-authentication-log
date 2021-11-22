@@ -8,6 +8,14 @@ return [
     // The database connection where the authentication_log table resides. Leave empty to use the default
     'db_connection' => null,
 
+    // The events the package listens for to log
+    'events' => [
+        'login' => \Illuminate\Auth\Events\Login::class,
+        'failed' => \Illuminate\Auth\Events\Failed::class,
+        'logout' => \Illuminate\Auth\Events\Logout::class,
+        'logout-other-devices' => \Illuminate\Auth\Events\OtherDeviceLogout::class,
+    ],
+
     'notifications' => [
         'new-device' => [
             // Send the NewDevice notification

@@ -15,8 +15,12 @@ class LogoutListener
         $this->request = $request;
     }
 
-    public function handle(Logout $event): void
+    public function handle($event): void
     {
+        if (! $event instanceof (config('authentication-log.events.logout') ?? Logout::class)) {
+            return;
+        }
+
         if ($event->user) {
             $user = $event->user;
             $ip = $this->request->ip();

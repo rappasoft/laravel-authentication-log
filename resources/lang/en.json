@@ -9,5 +9,7 @@
     "Regards": "Regards",
     "There has been a failed login attempt to your :app account.": "There has been a failed login attempt to your :app account.",
     "Time": "Time",
+    "Unknown City": "Unknown City",
+    "Unknown State": "Unknown State",
     "Your :app account logged in from a new device.": "Your :app account logged in from a new device."
 }
