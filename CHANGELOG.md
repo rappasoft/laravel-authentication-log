@@ -2,7 +2,7 @@
 
 All notable changes to `Laravel Authentication Log` will be documented in this file.
 
-### 1.3.0 - 2021-11-XX
+### 1.3.0 - 2021-11-21
 
 ### Added
 
