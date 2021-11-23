@@ -18,7 +18,8 @@ class LoginListener
 
     public function handle($event): void
     {
-        if (! $event instanceof (config('authentication-log.events.login') ?? Login::class)) {
+        $listener = config('authentication-log.events.login', Login::class);
+        if (! $event instanceof $listener) {
             return;
         }
 
