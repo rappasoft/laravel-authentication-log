@@ -4,6 +4,10 @@ All notable changes to `Laravel Authentication Log` will be documented in this f
 
 ### 1.2.1 - 2021-12-02
 
+### Added
+
+- Added latestAuthentication relationship - https://github.com/rappasoft/laravel-authentication-log/pull/24
+
 ### Changed
 
 - Fixed issue with PHP 7.4 - https://github.com/rappasoft/laravel-authentication-log/pull/22
