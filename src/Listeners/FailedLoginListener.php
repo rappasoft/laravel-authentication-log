@@ -17,7 +17,8 @@ class FailedLoginListener
 
     public function handle($event): void
     {
-        if (! $event instanceof (config('authentication-log.events.failed') ?? Failed::class)) {
+        $listener = config('authentication-log.events.failed', Failed::class);
+        if (! $event instanceof $listener) {
             return;
         }
 
