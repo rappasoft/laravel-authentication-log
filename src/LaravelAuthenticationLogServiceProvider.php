@@ -22,6 +22,7 @@ class LaravelAuthenticationLogServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-authentication-log')
             ->hasConfigFile()
+            ->hasTranslations()
             ->hasViews()
             ->hasMigration('create_authentication_log_table')
             ->hasCommand(PurgeAuthenticationLogCommand::class);
