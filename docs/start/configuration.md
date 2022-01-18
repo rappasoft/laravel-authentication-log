@@ -32,7 +32,7 @@ return [
 
     // The database connection where the authentication_log table resides. Leave empty to use the default
     'db_connection' => null,
-    
+
     // The events the package listens for to log (as of v1.3)
     'events' => [
         'login' => \Illuminate\Auth\Events\Login::class,
@@ -95,7 +95,7 @@ The package will listen for Laravel's Login, Logout, Failed, and OtherDeviceLogo
 
 ## Overriding default Laravel events
 
-If you would like to listen to your own events you may override them in the package config (as of v1.3).
+If you would like to listen to your own events you may override them in the package config (as of v1.2).
 
 ### Example event override
 
