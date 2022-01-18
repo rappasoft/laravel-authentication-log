@@ -2,6 +2,11 @@
 
 All notable changes to `Laravel Authentication Log` will be documented in this file.
 
+### 1.3.0 - 2022-01-17
+
+### Changed
+
+- Added missing `hasTranslations()` - https://github.com/rappasoft/laravel-authentication-log/pull/30
 ### 1.2.1 - 2021-12-02
 
 ### Added
