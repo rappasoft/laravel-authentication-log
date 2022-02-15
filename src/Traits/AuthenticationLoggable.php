@@ -13,7 +13,7 @@ trait AuthenticationLoggable
 
     public function latestAuthentication()
     {
-        return $this->morphOne(AuthenticationLog::class, 'authenticatable')->latestOfMany('login_at');
+        return $this->morphOne(AuthenticationLog::class, 'authenticatable')->latestOfMany('login_at')->withDefault();
     }
 
     public function notifyAuthenticationLogVia(): array
