@@ -2,6 +2,12 @@
 
 All notable changes to `Laravel Authentication Log` will be documented in this file.
 
+### 2.0.0 - 2022-02-19
+
+### Added
+
+- Laravel 9 Support
+
 ### 1.3.0 - 2022-01-17
 
 ### Changed

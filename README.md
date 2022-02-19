@@ -11,6 +11,13 @@ Laravel Authentication Log is a package which tracks your user's authentication 
 
 See the [documentation](https://rappasoft.com/docs/laravel-authentication-log) for detailed installation and usage instructions.
 
+## Version Compatibility
+
+ Laravel  | Authentication Log
+:---------|:------------------
+ 8.x      | 1.x
+ 9.x      | 2.x
+
 ## Testing
 
 ```bash
