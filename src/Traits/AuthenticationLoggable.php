@@ -43,11 +43,11 @@ trait AuthenticationLoggable
 
     public function previousLoginAt()
     {
-        return optional($this->authentications()->skip(1)->where('login_successful', true)->first())->login_at;
+        return optional($this->authentications()->skip(1)->whereLoginSuccessful(true)->first())->login_at;
     }
 
     public function previousLoginIp()
     {
-        return optional($this->authentications()->skip(1)->where('login_successful', true)->first())->ip_address;
+        return optional($this->authentications()->skip(1)->whereLoginSuccessful(true)->first())->ip_address;
     }
 }
