@@ -21,7 +21,6 @@ User::find(1)->lastSuccessfulLoginIp();
 
 Get the user's previous login time & IP address (ignoring the current login):
 ```php
-auth()->user()->previousLoginAt();
-
-auth()->user()->previousLoginIp();
+Auth::user()->previousLoginAt();
+Auth::user()->previousLoginIp();
 ```
