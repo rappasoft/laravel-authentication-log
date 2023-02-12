@@ -24,7 +24,13 @@ class OtherDeviceLogoutListener
 
         if ($event->user) {
             $user = $event->user;
-            $ip = $this->request->ip();
+            
+            if (!empty($this->request->server('HTTP_CF_CONNECTING_IP'))) {
+                $ip = $this->request->server('HTTP_CF_CONNECTING_IP');
+            } else {
+                $ip = $this->request->ip();
+            }
+
             $userAgent = $this->request->userAgent();
             $authenticationLog = $user->authentications()->whereIpAddress($ip)->whereUserAgent($userAgent)->first();
 
