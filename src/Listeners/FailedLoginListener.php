@@ -23,8 +23,14 @@ class FailedLoginListener
         }
 
         if ($event->user) {
+            $ip = $this->request->ip();
+            
+            if (! empty($this->request->server('HTTP_CF_CONNECTING_IP'))) {
+                $ip = $this->request->server('HTTP_CF_CONNECTING_IP');
+            }
+
             $log = $event->user->authentications()->create([
-                'ip_address' => $ip = $this->request->ip(),
+                'ip_address' => $ip,
                 'user_agent' => $this->request->userAgent(),
                 'login_at' => now(),
                 'login_successful' => false,
