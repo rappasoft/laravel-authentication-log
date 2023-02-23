@@ -4,7 +4,9 @@ All notable changes to `Laravel Authentication Log` will be documented in this f
 
 ### 3.0.0 - 2023-02-23
 
-- Laravel 10 Support
+- Laravel 10 Support - https://github.com/rappasoft/laravel-authentication-log/pull/70
+- Use null safe/chaining operator - https://github.com/rappasoft/laravel-authentication-log/pull/57
+- Optimize Other Devices Logout Listener - https://github.com/rappasoft/laravel-authentication-log/pull/52
 
 ### 2.0.0 - 2022-02-19
 
