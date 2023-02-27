@@ -41,7 +41,7 @@ class OtherDeviceLogoutListener
                 ]);
             }
 
-            foreach ($user->authentications()->whereLoginSuccessful(true)->get() as $log) {
+            foreach ($user->authentications()->whereLoginSuccessful(true)->whereNull('logout_at')->get() as $log) {
                 if ($log->id !== $authenticationLog->id) {
                     $log->update([
                         'cleared_by_user' => true,
