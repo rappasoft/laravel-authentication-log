@@ -78,14 +78,17 @@ php artisan vendor:publish --provider="Torann\GeoIP\GeoIPServiceProvider" --tag=
 
 ## Setting up your model
 
+The models must implement the `AuthenticationLoggableContract`.
+
 You must add the `AuthenticationLoggable` and `Notifiable` traits to the models you want to track.
 
 ```php
 use Illuminate\Notifications\Notifiable;
 use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
+use Rappasoft\LaravelAuthenticationLog\Contracts\AuthenticationLoggableContract;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements AuthenticationLoggableContract
 {
     use Notifiable, AuthenticationLoggable;
 }

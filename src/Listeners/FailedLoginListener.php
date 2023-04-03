@@ -5,6 +5,7 @@ namespace Rappasoft\LaravelAuthenticationLog\Listeners;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Http\Request;
 use Rappasoft\LaravelAuthenticationLog\Notifications\FailedLogin;
+use Rappasoft\LaravelAuthenticationLog\Support\Utils;
 
 class FailedLoginListener
 {
@@ -22,19 +23,21 @@ class FailedLoginListener
             return;
         }
 
-        if ($event->user) {
-            $log = $event->user->authentications()->create([
-                'ip_address' => $ip = $this->request->ip(),
-                'user_agent' => $this->request->userAgent(),
-                'login_at' => now(),
-                'login_successful' => false,
-                'location' => config('authentication-log.notifications.new-device.location') ? optional(geoip()->getLocation($ip))->toArray() : null,
-            ]);
+        if (! Utils::hasAuthenticationLoggableContract($event)) {
+            return;
+        }
 
-            if (config('authentication-log.notifications.failed-login.enabled')) {
-                $failedLogin = config('authentication-log.notifications.failed-login.template') ?? FailedLogin::class;
-                $event->user->notify(new $failedLogin($log));
-            }
+        $log = $event->user->authentications()->create([
+            'ip_address' => $ip = $this->request->ip(),
+            'user_agent' => $this->request->userAgent(),
+            'login_at' => now(),
+            'login_successful' => false,
+            'location' => config('authentication-log.notifications.new-device.location') ? optional(geoip()->getLocation($ip))->toArray() : null,
+        ]);
+
+        if (config('authentication-log.notifications.failed-login.enabled')) {
+            $failedLogin = config('authentication-log.notifications.failed-login.template') ?? FailedLogin::class;
+            $event->user->notify(new $failedLogin($log));
         }
     }
 }

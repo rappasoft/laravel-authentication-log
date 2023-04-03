@@ -5,6 +5,7 @@ namespace Rappasoft\LaravelAuthenticationLog\Listeners;
 use Illuminate\Auth\Events\OtherDeviceLogout;
 use Illuminate\Http\Request;
 use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
+use Rappasoft\LaravelAuthenticationLog\Support\Utils;
 
 class OtherDeviceLogoutListener
 {
@@ -22,26 +23,28 @@ class OtherDeviceLogoutListener
             return;
         }
 
-        if ($event->user) {
-            $user = $event->user;
-            $ip = $this->request->ip();
-            $userAgent = $this->request->userAgent();
-            $authenticationLog = $user->authentications()->whereIpAddress($ip)->whereUserAgent($userAgent)->first();
+        if (! Utils::hasAuthenticationLoggableContract($event)) {
+            return;
+        }
 
-            if (! $authenticationLog) {
-                $authenticationLog = new AuthenticationLog([
-                    'ip_address' => $ip,
-                    'user_agent' => $userAgent,
+        $user = $event->user;
+        $ip = $this->request->ip();
+        $userAgent = $this->request->userAgent();
+        $authenticationLog = $user->authentications()->whereIpAddress($ip)->whereUserAgent($userAgent)->first();
+
+        if (! $authenticationLog) {
+            $authenticationLog = new AuthenticationLog([
+                'ip_address' => $ip,
+                'user_agent' => $userAgent,
+            ]);
+        }
+
+        foreach ($user->authentications()->whereLoginSuccessful(true)->whereNull('logout_at')->get() as $log) {
+            if ($log->id !== $authenticationLog->id) {
+                $log->update([
+                    'cleared_by_user' => true,
+                    'logout_at' => now(),
                 ]);
-            }
-
-            foreach ($user->authentications()->whereLoginSuccessful(true)->whereNull('logout_at')->get() as $log) {
-                if ($log->id !== $authenticationLog->id) {
-                    $log->update([
-                        'cleared_by_user' => true,
-                        'logout_at' => now(),
-                    ]);
-                }
             }
         }
     }
