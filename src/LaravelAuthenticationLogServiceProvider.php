@@ -24,7 +24,10 @@ class LaravelAuthenticationLogServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->hasTranslations()
             ->hasViews()
-            ->hasMigration('create_authentication_log_table')
+            ->hasMigrations([
+                'create_authentication_log_table',
+                'add_browser_and_browser_os_to_log_table'
+            ])
             ->hasCommand(PurgeAuthenticationLogCommand::class);
 
         $events = $this->app->make(Dispatcher::class);
