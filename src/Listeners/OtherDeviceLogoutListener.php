@@ -3,49 +3,51 @@
 namespace Rappasoft\LaravelAuthenticationLog\Listeners;
 
 use Illuminate\Auth\Events\OtherDeviceLogout;
-use Illuminate\Http\Request;
 use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
-use Rappasoft\LaravelAuthenticationLog\Support\Utils;
+use WhichBrowser\Parser;
 
-class OtherDeviceLogoutListener
+class OtherDeviceLogoutListener extends EventListener
 {
-    public Request $request;
-
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
-
     public function handle($event): void
     {
-        $listener = config('authentication-log.events.other-device-logout', OtherDeviceLogout::class);
-        if (! $event instanceof $listener) {
+        if (! $this->isListenerForEvent($event, 'other-device-logout', OtherDeviceLogout::class)) {
             return;
         }
 
-        if (! Utils::hasAuthenticationLoggableContract($event)) {
+        if (! $this->isLoggable($event)) {
             return;
         }
 
         $user = $event->user;
-        $ip = $this->request->ip();
-        $userAgent = $this->request->userAgent();
-        $authenticationLog = $user->authentications()->whereIpAddress($ip)->whereUserAgent($userAgent)->first();
+
+        $authenticationLog = $this->getKnownDevices($user);
 
         if (! $authenticationLog) {
             $authenticationLog = new AuthenticationLog([
-                'ip_address' => $ip,
-                'user_agent' => $userAgent,
+                'ip_address' => $this->request->ip(),
+                'user_agent' => $this->request->userAgent(),
             ]);
         }
 
-        foreach ($user->authentications()->whereLoginSuccessful(true)->whereNull('logout_at')->get() as $log) {
-            if ($log->id !== $authenticationLog->id) {
-                $log->update([
-                    'cleared_by_user' => true,
-                    'logout_at' => now(),
-                ]);
-            }
-        }
+        $user
+            ->authentications()
+            ->where('login_successful', true)
+            ->whereNull('logout_at')
+            ->where('id', '!=', $authenticationLog->id)
+            ->update([
+                'cleared_by_user' => true,
+                'logout_at' => now(),
+            ]);
+    }
+
+    protected function getKnownDevices($user): ?AuthenticationLog
+    {
+        $parser = new Parser($this->request->userAgent());
+
+        return $user->authentications()
+            ->where('ip_address', $this->request->ip())
+            ->where('browser', $parser->browser->name)
+            ->where('browser_os', $parser->os->name)
+            ->first();
     }
 }

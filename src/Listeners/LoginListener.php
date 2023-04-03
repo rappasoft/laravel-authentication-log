@@ -3,48 +3,49 @@
 namespace Rappasoft\LaravelAuthenticationLog\Listeners;
 
 use Illuminate\Auth\Events\Login;
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
 use Rappasoft\LaravelAuthenticationLog\Notifications\NewDevice;
-use Rappasoft\LaravelAuthenticationLog\Support\Utils;
+use WhichBrowser\Parser;
 
-class LoginListener
+class LoginListener extends EventListener
 {
-    public Request $request;
-
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
-
     public function handle($event): void
     {
-        $listener = config('authentication-log.events.login', Login::class);
-        if (! $event instanceof $listener) {
+        if (! $this->isListenerForEvent($event, 'login', Login::class)) {
             return;
         }
 
-        if (! Utils::hasAuthenticationLoggableContract($event)) {
+        if (! $this->isLoggable($event)) {
             return;
         }
 
         $user = $event->user;
-        $ip = $this->request->ip();
-        $userAgent = $this->request->userAgent();
-        $known = $user->authentications()->whereIpAddress($ip)->whereUserAgent($userAgent)->whereLoginSuccessful(true)->first();
         $newUser = Carbon::parse($user->{$user->getCreatedAtColumn()})->diffInMinutes(Carbon::now()) < 1;
 
         $log = $user->authentications()->create([
-            'ip_address' => $ip,
-            'user_agent' => $userAgent,
+            'ip_address' => $this->request->ip(),
+            'user_agent' => $this->request->userAgent(),
             'login_at' => now(),
             'login_successful' => true,
-            'location' => config('authentication-log.notifications.new-device.location') ? optional(geoip()->getLocation($ip))->toArray() : null,
+            'location' => config('authentication-log.notifications.new-device.location') ? optional(geoip()->getLocation($this->request->ip()))->toArray() : null,
         ]);
 
-        if (! $known && ! $newUser && config('authentication-log.notifications.new-device.enabled')) {
+        if (! $newUser && config('authentication-log.notifications.new-device.enabled') && $this->getKnownDevices($user)) {
             $newDevice = config('authentication-log.notifications.new-device.template') ?? NewDevice::class;
             $user->notify(new $newDevice($log));
         }
+    }
+
+    protected function getKnownDevices($user): ?AuthenticationLog
+    {
+        $parser = new Parser($this->request->userAgent());
+
+        return $user->authentications()
+            ->where('ip_address', $this->request->ip())
+            ->where('browser', $parser->browser->name)
+            ->where('browser_os', $parser->os->name)
+            ->where('login_successful', true)
+            ->first();
     }
 }

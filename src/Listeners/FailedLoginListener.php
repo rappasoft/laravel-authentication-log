@@ -3,27 +3,17 @@
 namespace Rappasoft\LaravelAuthenticationLog\Listeners;
 
 use Illuminate\Auth\Events\Failed;
-use Illuminate\Http\Request;
 use Rappasoft\LaravelAuthenticationLog\Notifications\FailedLogin;
-use Rappasoft\LaravelAuthenticationLog\Support\Utils;
 
-class FailedLoginListener
+class FailedLoginListener extends EventListener
 {
-    public Request $request;
-
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
-
     public function handle($event): void
     {
-        $listener = config('authentication-log.events.failed', Failed::class);
-        if (! $event instanceof $listener) {
+        if (! $this->isListenerForEvent($event, 'failed', Failed::class)) {
             return;
         }
 
-        if (! Utils::hasAuthenticationLoggableContract($event)) {
+        if (! $this->isLoggable($event)) {
             return;
         }
 
