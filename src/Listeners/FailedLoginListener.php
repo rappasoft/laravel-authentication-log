@@ -24,8 +24,8 @@ class FailedLoginListener
 
         if ($event->user) {
 
-            if (!empty($this->request->server('HTTP_CF_CONNECTING_IP'))) {
-                $ip = $this->request->server('HTTP_CF_CONNECTING_IP');
+            if (config('authentication-log.behind_cdn')) {
+                $ip = $this->request->server(config('authentication-log.behind_cdn.http_header_field'));
             } else {
                 $ip = $this->request->ip();
             }
