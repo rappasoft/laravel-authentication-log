@@ -27,8 +27,6 @@ class LoginListener
             $user = $event->user;
             $ip = $this->request->ip();
             $userAgent = $this->request->userAgent();
-            $known = $user->authentications()->whereIpAddress($ip)->whereUserAgent($userAgent)->whereLoginSuccessful(true)->first();
-            $newUser = Carbon::parse($user->{$user->getCreatedAtColumn()})->diffInMinutes(Carbon::now()) < config('authentication-log.notifications.new-device.new_user_in_minutes', 1);
 
             $log = $user->authentications()->create([
                 'ip_address' => $ip,
@@ -38,7 +36,14 @@ class LoginListener
                 'location' => config('authentication-log.notifications.new-device.location') ? optional(geoip()->getLocation($ip))->toArray() : null,
             ]);
 
-            if (! $known && ! $newUser && config('authentication-log.notifications.new-device.enabled')) {
+            if (empty(config('authentication-log.notifications.new-device.enabled'))) {
+                return;
+            }
+
+            $known = $user->authentications()->whereIpAddress($ip)->whereUserAgent($userAgent)->whereLoginSuccessful(true)->first();
+            $newUser = Carbon::parse($user->{$user->getCreatedAtColumn()})->diffInMinutes(Carbon::now()) < config('authentication-log.notifications.new-device.new_user_in_minutes', 1);
+
+            if (! $known && ! $newUser) {
                 $newDevice = config('authentication-log.notifications.new-device.template') ?? NewDevice::class;
                 $user->notify(new $newDevice($log));
             }
