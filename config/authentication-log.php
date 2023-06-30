@@ -26,6 +26,9 @@ return [
 
             // The Notification class to send
             'template' => \Rappasoft\LaravelAuthenticationLog\Notifications\NewDevice::class,
+
+            // Number of minutes after which the user is no longer considered as a new user
+            'new_user_in_minutes' => env('NEW_USER_IN_MINUTES', 1),
         ],
         'failed-login' => [
             // Send the FailedLogin notification

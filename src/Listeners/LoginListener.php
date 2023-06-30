@@ -28,7 +28,7 @@ class LoginListener
             $ip = $this->request->ip();
             $userAgent = $this->request->userAgent();
             $known = $user->authentications()->whereIpAddress($ip)->whereUserAgent($userAgent)->whereLoginSuccessful(true)->first();
-            $newUser = Carbon::parse($user->{$user->getCreatedAtColumn()})->diffInMinutes(Carbon::now()) < 1;
+            $newUser = Carbon::parse($user->{$user->getCreatedAtColumn()})->diffInMinutes(Carbon::now()) < config('authentication-log.notifications.new-device.new_user_in_minutes', 1);
 
             $log = $user->authentications()->create([
                 'ip_address' => $ip,
