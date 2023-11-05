@@ -28,9 +28,9 @@ class LaravelAuthenticationLogServiceProvider extends PackageServiceProvider
             ->hasCommand(PurgeAuthenticationLogCommand::class);
 
         $events = $this->app->make(Dispatcher::class);
-        $events->listen(config('authentication-log.events.login', Login::class), LoginListener::class);
-        $events->listen(config('authentication-log.events.failed', Failed::class), FailedLoginListener::class);
-        $events->listen(config('authentication-log.events.logout', Logout::class), LogoutListener::class);
-        $events->listen(config('authentication-log.events.other-device-logout', OtherDeviceLogout::class), OtherDeviceLogoutListener::class);
+        $events->listen(config('authentication-log.events.login', Login::class), config('authentication-log.listeners.login', LoginListener::class));
+        $events->listen(config('authentication-log.events.failed', Failed::class), config('authentication-log.listeners.failed', FailedLoginListener::class));
+        $events->listen(config('authentication-log.events.logout', Logout::class), config('authentication-log.listeners.logout', LogoutListener::class));
+        $events->listen(config('authentication-log.events.other-device-logout', OtherDeviceLogout::class), config('authentication-log.listeners.other-device-logout', OtherDeviceLogoutListener::class));
     }
 }
