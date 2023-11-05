@@ -16,6 +16,13 @@ return [
         'logout-other-devices' => \Illuminate\Auth\Events\OtherDeviceLogout::class,
     ],
 
+    'listeners' => [
+        'login' => \Rappasoft\LaravelAuthenticationLog\Listeners\LoginListener::class,
+        'failed' => \Rappasoft\LaravelAuthenticationLog\Listeners\FailedLoginListener::class,
+        'logout' => \Rappasoft\LaravelAuthenticationLog\Listeners\LogoutListener::class,
+        'logout-other-devices' => \Rappasoft\LaravelAuthenticationLog\Listeners\OtherDeviceLogoutListener::class,
+    ],
+
     'notifications' => [
         'new-device' => [
             // Send the NewDevice notification
