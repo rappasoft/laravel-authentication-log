@@ -6,6 +6,7 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Rappasoft\LaravelAuthenticationLog\Notifications\NewDevice;
+use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 
 class LoginListener
 {
@@ -24,6 +25,9 @@ class LoginListener
         }
 
         if ($event->user) {
+            if(!in_array(AuthenticationLoggable::class, class_uses_recursive(get_class($event->user))){
+                return;
+            }
             $user = $event->user;
             $ip = $this->request->ip();
             $userAgent = $this->request->userAgent();
