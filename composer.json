@@ -22,7 +22,7 @@
     },
     "require-dev": {
         "nunomaduro/collision": "^6.0",
-        "orchestra/testbench": "^7.0",
+        "orchestra/testbench": "^7.0|^8.0|^9.0",
         "pestphp/pest": "^1.21",
         "pestphp/pest-plugin-laravel": "^1.2",
         "spatie/laravel-ray": "^1.29",
