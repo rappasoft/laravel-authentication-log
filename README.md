@@ -18,6 +18,7 @@ See the [documentation](https://rappasoft.com/docs/laravel-authentication-log) f
  8.x      | 1.x
  9.x      | 2.x
  10.x     | 3.x
+ 11.x     | 4.x
 
 ## Installation
 
