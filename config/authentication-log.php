@@ -16,6 +16,13 @@ return [
         'logout-other-devices' => \Illuminate\Auth\Events\OtherDeviceLogout::class,
     ],
 
+    'listeners' => [
+        'login' => \Rappasoft\LaravelAuthenticationLog\Listeners\LoginListener::class,
+        'failed' => \Rappasoft\LaravelAuthenticationLog\Listeners\FailedLoginListener::class,
+        'logout' => \Rappasoft\LaravelAuthenticationLog\Listeners\LogoutListener::class,
+        'logout-other-devices' => \Rappasoft\LaravelAuthenticationLog\Listeners\OtherDeviceLogoutListener::class,
+    ],
+
     'notifications' => [
         'new-device' => [
             // Send the NewDevice notification
@@ -42,4 +49,15 @@ return [
     // When the clean-up command is run, delete old logs greater than `purge` days
     // Don't schedule the clean-up command if you want to keep logs forever.
     'purge' => 365,
+
+
+    // if you are behind an CDN proxy, set 'behind_cdn.http_header_field' to the corresponding http header field of your cdn
+    // for cloudflare u can have look at: https://developers.cloudflare.com/fundamentals/get-started/reference/http-request-headers/
+    /*
+        'behind_cdn' => [
+            'http_header_field' => 'HTTP_CF_CONNECTING_IP' // used by Cloudflare
+        ],
+    */
+    // if you are not a cdn user, use false
+    'behind_cdn' => false,
 ];
