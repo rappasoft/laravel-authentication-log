@@ -26,7 +26,7 @@ class LoginListener
         }
 
         if ($event->user) {
-            if(! in_array(AuthenticationLoggable::class, class_uses_recursive(get_class($event->user)))){
+            if(! in_array(AuthenticationLoggable::class, class_uses_recursive(get_class($event->user)))) {
                 return;
             }
 
