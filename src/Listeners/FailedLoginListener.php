@@ -5,6 +5,7 @@ namespace Rappasoft\LaravelAuthenticationLog\Listeners;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Http\Request;
 use Rappasoft\LaravelAuthenticationLog\Notifications\FailedLogin;
+use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 
 class FailedLoginListener
 {
@@ -18,11 +19,15 @@ class FailedLoginListener
     public function handle($event): void
     {
         $listener = config('authentication-log.events.failed', Failed::class);
+
         if (! $event instanceof $listener) {
             return;
         }
 
         if ($event->user) {
+            if(! in_array(AuthenticationLoggable::class, class_uses_recursive(get_class($event->user)))){
+                return;
+            }
 
             if (config('authentication-log.behind_cdn')) {
                 $ip = $this->request->server(config('authentication-log.behind_cdn.http_header_field'));

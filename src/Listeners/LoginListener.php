@@ -20,12 +20,13 @@ class LoginListener
     public function handle($event): void
     {
         $listener = config('authentication-log.events.login', Login::class);
+
         if (! $event instanceof $listener) {
             return;
         }
 
         if ($event->user) {
-            if(!in_array(AuthenticationLoggable::class, class_uses_recursive(get_class($event->user))){
+            if(! in_array(AuthenticationLoggable::class, class_uses_recursive(get_class($event->user)))){
                 return;
             }
 

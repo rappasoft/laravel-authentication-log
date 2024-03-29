@@ -5,6 +5,7 @@ namespace Rappasoft\LaravelAuthenticationLog\Listeners;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Http\Request;
 use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
+use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 
 class LogoutListener
 {
@@ -18,11 +19,16 @@ class LogoutListener
     public function handle($event): void
     {
         $listener = config('authentication-log.events.logout', Logout::class);
+
         if (! $event instanceof $listener) {
             return;
         }
 
         if ($event->user) {
+            if(! in_array(AuthenticationLoggable::class, class_uses_recursive(get_class($event->user)))){
+                return;
+            }
+
             $user = $event->user;
 
             if (config('authentication-log.behind_cdn')) {
