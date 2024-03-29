@@ -6,6 +6,7 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Rappasoft\LaravelAuthenticationLog\Notifications\NewDevice;
+use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 
 class LoginListener
 {
@@ -24,6 +25,9 @@ class LoginListener
         }
 
         if ($event->user) {
+            if(!in_array(AuthenticationLoggable::class, class_uses_recursive(get_class($event->user))){
+                return;
+            }
 
             if (config('authentication-log.behind_cdn')) {
                 $ip = $this->request->server(config('authentication-log.behind_cdn.http_header_field'));
