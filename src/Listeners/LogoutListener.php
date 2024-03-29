@@ -30,7 +30,7 @@ class LogoutListener
             } else {
                 $ip = $this->request->ip();
             }
-            
+
             $userAgent = $this->request->userAgent();
             $log = $user->authentications()->whereIpAddress($ip)->whereUserAgent($userAgent)->orderByDesc('login_at')->first();
 

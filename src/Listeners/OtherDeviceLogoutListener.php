@@ -24,7 +24,7 @@ class OtherDeviceLogoutListener
 
         if ($event->user) {
             $user = $event->user;
-            
+
             if (config('authentication-log.behind_cdn')) {
                 $ip = $this->request->server(config('authentication-log.behind_cdn.http_header_field'));
             } else {
