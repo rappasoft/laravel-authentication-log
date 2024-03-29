@@ -50,14 +50,12 @@ return [
     // Don't schedule the clean-up command if you want to keep logs forever.
     'purge' => 365,
 
+    // If you are behind an CDN proxy, set 'behind_cdn.http_header_field' to the corresponding http header field of your cdn
+    // For cloudflare you can have look at: https://developers.cloudflare.com/fundamentals/get-started/reference/http-request-headers/
+//    'behind_cdn' => [
+//        'http_header_field' => 'HTTP_CF_CONNECTING_IP' // used by Cloudflare
+//    ],
 
-    // if you are behind an CDN proxy, set 'behind_cdn.http_header_field' to the corresponding http header field of your cdn
-    // for cloudflare u can have look at: https://developers.cloudflare.com/fundamentals/get-started/reference/http-request-headers/
-    /*
-        'behind_cdn' => [
-            'http_header_field' => 'HTTP_CF_CONNECTING_IP' // used by Cloudflare
-        ],
-    */
-    // if you are not a cdn user, use false
+    // If you are not a cdn user, use false
     'behind_cdn' => false,
 ];
