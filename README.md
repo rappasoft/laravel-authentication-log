@@ -5,6 +5,8 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/rappasoft/laravel-authentication-log/Check%20&%20fix%20styling?label=code%20style)](https://github.com/rappasoft/laravel-authentication-log/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/rappasoft/laravel-authentication-log.svg?style=flat-square)](https://packagist.org/packages/rappasoft/laravel-authentication-log)
 
+### Enjoying this package? [Buy me a beer 🍺](https://www.buymeacoffee.com/rappasoft)
+
 Laravel Authentication Log is a package which tracks your user's authentication information such as login/logout time, IP, Browser, Location, etc. as well as sends out notifications via mail, slack, or sms for new devices and failed logins.
 
 ## Documentation, Installation, and Usage Instructions
