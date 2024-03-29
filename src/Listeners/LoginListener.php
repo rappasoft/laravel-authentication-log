@@ -24,8 +24,14 @@ class LoginListener
         }
 
         if ($event->user) {
+
+            if (config('authentication-log.behind_cdn')) {
+                $ip = $this->request->server(config('authentication-log.behind_cdn.http_header_field'));
+            } else {
+                $ip = $this->request->ip();
+            }
+
             $user = $event->user;
-            $ip = $this->request->ip();
             $userAgent = $this->request->userAgent();
             $known = $user->authentications()->whereIpAddress($ip)->whereUserAgent($userAgent)->whereLoginSuccessful(true)->first();
             $newUser = Carbon::parse($user->{$user->getCreatedAtColumn()})->diffInMinutes(Carbon::now()) < 1;
