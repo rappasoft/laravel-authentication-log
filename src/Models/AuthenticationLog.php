@@ -5,6 +5,18 @@ namespace Rappasoft\LaravelAuthenticationLog\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
+/**
+ * @property int $id
+ * @property string $authenticatable_type
+ * @property int $authenticatable_id
+ * @property string|null $ip_address
+ * @property string|null $user_agent
+ * @property \Illuminate\Support\Carbon|null $login_at
+ * @property bool $login_successful
+ * @property \Illuminate\Support\Carbon|null $logout_at
+ * @property bool $cleared_by_user
+ * @property array|null $location
+ */
 class AuthenticationLog extends Model
 {
     public $timestamps = false;
