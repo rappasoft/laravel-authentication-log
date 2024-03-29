@@ -2,6 +2,12 @@
 
 All notable changes to `Laravel Authentication Log` will be documented in this file.
 
+### 4.0.0 - 2024-03-28
+
+- Laravel 11 Support (https://github.com/rappasoft/laravel-authentication-log/pull/100)
+- Add config listeners
+- Use real user IP behind Cloudflare
+
 ### 3.0.0 - 2023-02-23
 
 - Laravel 10 Support - https://github.com/rappasoft/laravel-authentication-log/pull/70
