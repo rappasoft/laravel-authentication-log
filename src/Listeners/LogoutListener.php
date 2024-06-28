@@ -4,7 +4,6 @@ namespace Rappasoft\LaravelAuthenticationLog\Listeners;
 
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Http\Request;
-use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
 use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 
 class LogoutListener
@@ -41,7 +40,8 @@ class LogoutListener
             $log = $user->authentications()->whereIpAddress($ip)->whereUserAgent($userAgent)->orderByDesc('login_at')->first();
 
             if (! $log) {
-                $log = new AuthenticationLog([
+                $model = config('authentication-log.model');
+                $log = new $model([
                     'ip_address' => $ip,
                     'user_agent' => $userAgent,
                 ]);

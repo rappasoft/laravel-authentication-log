@@ -4,7 +4,6 @@ namespace Rappasoft\LaravelAuthenticationLog\Listeners;
 
 use Illuminate\Auth\Events\OtherDeviceLogout;
 use Illuminate\Http\Request;
-use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
 use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 
 class OtherDeviceLogoutListener
@@ -41,7 +40,8 @@ class OtherDeviceLogoutListener
             $authenticationLog = $user->authentications()->whereIpAddress($ip)->whereUserAgent($userAgent)->first();
 
             if (! $authenticationLog) {
-                $authenticationLog = new AuthenticationLog([
+                $model = config('authentication-log.model');
+                $authenticationLog = new $model([
                     'ip_address' => $ip,
                     'user_agent' => $userAgent,
                 ]);

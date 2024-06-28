@@ -2,18 +2,16 @@
 
 namespace Rappasoft\LaravelAuthenticationLog\Traits;
 
-use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
-
 trait AuthenticationLoggable
 {
     public function authentications()
     {
-        return $this->morphMany(AuthenticationLog::class, 'authenticatable')->latest('login_at');
+        return $this->morphMany(config('authentication-log.model'), 'authenticatable')->latest('login_at');
     }
 
     public function latestAuthentication()
     {
-        return $this->morphOne(AuthenticationLog::class, 'authenticatable')->latestOfMany('login_at');
+        return $this->morphOne(config('authentication-log.model'), 'authenticatable')->latestOfMany('login_at');
     }
 
     public function notifyAuthenticationLogVia(): array
