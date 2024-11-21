@@ -17,6 +17,8 @@ User::find(1)->lastSuccessfulLoginAt();
 User::find(1)->lastLoginIp();
 
 User::find(1)->lastSuccessfulLoginIp();
+
+User::find(1)->lastLoginUrl();
 ```
 
 Get the user's previous login time & IP address (ignoring the current login):

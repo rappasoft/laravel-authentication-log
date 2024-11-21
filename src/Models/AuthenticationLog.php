@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string|null $ip_address
  * @property string|null $user_agent
  * @property \Illuminate\Support\Carbon|null $login_at
+ * @property string|null $login_url
  * @property bool $login_successful
  * @property \Illuminate\Support\Carbon|null $logout_at
  * @property bool $cleared_by_user
@@ -27,6 +28,7 @@ class AuthenticationLog extends Model
         'ip_address',
         'user_agent',
         'login_at',
+        'login_url',
         'login_successful',
         'logout_at',
         'cleared_by_user',
