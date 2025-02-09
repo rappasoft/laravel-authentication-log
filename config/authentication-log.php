@@ -29,7 +29,7 @@ return [
             'enabled' => env('NEW_DEVICE_NOTIFICATION', true),
 
             // Use torann/geoip to attempt to get a location
-            'location' => true,
+            'location' => function_exists('geoip'),
 
             // The Notification class to send
             'template' => \Rappasoft\LaravelAuthenticationLog\Notifications\NewDevice::class,
@@ -39,7 +39,7 @@ return [
             'enabled' => env('FAILED_LOGIN_NOTIFICATION', false),
 
             // Use torann/geoip to attempt to get a location
-            'location' => true,
+            'location' => function_exists('geoip'),
 
             // The Notification class to send
             'template' => \Rappasoft\LaravelAuthenticationLog\Notifications\FailedLogin::class,
