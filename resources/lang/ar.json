@@ -1,0 +1,15 @@
+{
+    "A failed login to your account": "محاولة تسجيل دخول فاشلة إلى حسابك",
+    "Account:": "الحساب :",
+    "Browser:": "المتصفح :",
+    "Hello!": "مرحباً,",
+    "If this was you, you can ignore this alert. If you suspect any suspicious activity on your account, please change your password.": "اذا كان هذا أنت, يمكنك تجاهل هذا التنبيه. إذا كنت تشتبه في أي نشاط مشبوه على حسابك, يرجى تغيير كلمة المرور الخاصة بك.",
+    "IP Address:": "عنوان الآي بي :",
+    "Location:": "الموقع :",
+    "Regards,": "شكراً,",
+    "There has been a failed login attempt to your :app account.": "هناك محاولة دخول فاشلة الى حسابك في :app.",
+    "Time:": "الوقت :",
+    "Unknown City": "مدينة غير معروفة",
+    "Unknown State": "محافظة غير معروفة",
+    "Your :app account logged in from a new device.": "تم تسجيل الدخول الى حسابك في :app من جهاز جديد."
+}
