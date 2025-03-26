@@ -40,7 +40,7 @@ class FailedLoginListener
                 'user_agent' => $this->request->userAgent(),
                 'login_at' => now(),
                 'login_successful' => false,
-                'location' => config('authentication-log.notifications.new-device.location') ? optional(geoip()->getLocation($ip))->toArray() : null,
+                'location' => config('authentication-log.notifications.failed-login.location') ? optional(geoip()->getLocation($ip))->toArray() : null,
             ]);
 
             if (config('authentication-log.notifications.failed-login.enabled')) {
