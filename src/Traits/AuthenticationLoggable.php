@@ -26,6 +26,11 @@ trait AuthenticationLoggable
         return $this->authentications()->first()?->login_at;
     }
 
+    public function lastLoginUrl()
+    {
+        return $this->authentications()->first()?->login_url;
+    }
+
     public function lastSuccessfulLoginAt()
     {
         return $this->authentications()->whereLoginSuccessful(true)->first()?->login_at;

@@ -39,6 +39,7 @@ class FailedLoginListener
                 'ip_address' => $ip,
                 'user_agent' => $this->request->userAgent(),
                 'login_at' => now(),
+                'login_url' => $this->request->fullUrl(),
                 'login_successful' => false,
                 'location' => config('authentication-log.notifications.new-device.location') ? optional(geoip()->getLocation($ip))->toArray() : null,
             ]);
