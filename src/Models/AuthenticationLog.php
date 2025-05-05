@@ -31,6 +31,7 @@ class AuthenticationLog extends Model
         'logout_at',
         'cleared_by_user',
         'location',
+        'tenant_id'
     ];
 
     protected $casts = [

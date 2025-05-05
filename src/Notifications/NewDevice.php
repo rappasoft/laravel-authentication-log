@@ -8,17 +8,17 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\NexmoMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
-use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
 
 class NewDevice extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public AuthenticationLog $authenticationLog;
+    public $authenticationLog;
 
-    public function __construct(AuthenticationLog $authenticationLog)
+    public function __construct($authenticationLog)
     {
-        $this->authenticationLog = $authenticationLog;
+        $modelClass              = config('authentication-log.model');
+        $this->authenticationLog = new $modelClass($authenticationLog->getAttributes());
     }
 
     public function via($notifiable)

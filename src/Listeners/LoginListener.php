@@ -2,6 +2,7 @@
 
 namespace Rappasoft\LaravelAuthenticationLog\Listeners;
 
+use App\Models\Tenant;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -47,6 +48,7 @@ class LoginListener
                 'login_at' => now(),
                 'login_successful' => true,
                 'location' => config('authentication-log.notifications.new-device.location') ? optional(geoip()->getLocation($ip))->toArray() : null,
+                'tenant_id'=> Tenant::first()->id
             ]);
 
             if (! $known && ! $newUser && config('authentication-log.notifications.new-device.enabled')) {
