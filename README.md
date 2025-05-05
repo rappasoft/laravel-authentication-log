@@ -9,6 +9,10 @@ Laravel Authentication Log is a package which tracks your user's authentication 
 
 See the [documentation](https://rappasoft.com/docs/laravel-authentication-log) for detailed installation and usage instructions.
 
+## :film_strip: Video Tour 
+If you'd prefer a more visual review of this package, please watch this video on Laravel Package Tutorial.
+[<img src="https://img.youtube.com/vi/NMKbiyzAsCc/0.jpg" width="450">](https://youtu.be/NMKbiyzAsCc)
+
 ## Version Compatibility
 
  Laravel  | Authentication Log
