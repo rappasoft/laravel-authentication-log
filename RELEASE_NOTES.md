@@ -1,4 +1,20 @@
-# Laravel Authentication Log v6.0.0 Release Notes
+# Laravel Authentication Log Release Notes
+
+# v6.1.0 Release Notes
+
+## 🚀 Laravel 13 Support & Immutable Date Compatibility
+
+Released 2026-06-10.
+
+- **Laravel 13.x support** ([#140](https://github.com/rappasoft/laravel-authentication-log/pull/140)) — the package and CI matrix now cover PHP 8.2–8.4 on Laravel 11.x, 12.x, and 13.x
+- **Immutable date casting compatibility** ([#137](https://github.com/rappasoft/laravel-authentication-log/pull/137)) — `lastLoginAt()`, `lastSuccessfulLoginAt()`, and `previousLoginAt()` now return `\Carbon\CarbonInterface` instead of `\Illuminate\Support\Carbon`, fixing a `TypeError` in applications that cast model dates to `CarbonImmutable` (the default in current Laravel starter kits)
+- **PHP 8.2+ now required** — PHP 8.1 is EOL and was never installable alongside Laravel 11+, so this does not affect any working installation
+
+No database changes or migrations are required when upgrading from v6.0.x.
+
+---
+
+# v6.0.0 Release Notes
 
 ## 🎉 Major Release - Enhanced Features & Modernization
 
