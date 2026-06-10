@@ -36,7 +36,7 @@ it('can get last login at', function () {
     ]);
 
     expect($user->lastLoginAt())->not->toBeNull();
-    expect($user->lastLoginAt())->toBeInstanceOf(\Illuminate\Support\Carbon::class);
+    expect($user->lastLoginAt())->toBeInstanceOf(\Carbon\CarbonInterface::class);
 });
 
 it('returns null when no authentications exist', function () {
