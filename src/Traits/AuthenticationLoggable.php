@@ -23,12 +23,12 @@ trait AuthenticationLoggable
         return ['mail'];
     }
 
-    public function lastLoginAt(): ?\Illuminate\Support\Carbon
+    public function lastLoginAt(): ?\Carbon\CarbonInterface
     {
         return $this->authentications()->first()?->login_at;
     }
 
-    public function lastSuccessfulLoginAt(): ?\Illuminate\Support\Carbon
+    public function lastSuccessfulLoginAt(): ?\Carbon\CarbonInterface
     {
         return $this->authentications()->whereLoginSuccessful(true)->first()?->login_at;
     }
@@ -43,7 +43,7 @@ trait AuthenticationLoggable
         return $this->authentications()->whereLoginSuccessful(true)->first()?->ip_address;
     }
 
-    public function previousLoginAt(): ?\Illuminate\Support\Carbon
+    public function previousLoginAt(): ?\Carbon\CarbonInterface
     {
         return $this->authentications()->skip(1)->first()?->login_at;
     }

@@ -15,10 +15,10 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string|null $device_id
  * @property string|null $device_name
  * @property bool $is_trusted
- * @property \Illuminate\Support\Carbon|null $login_at
+ * @property \Carbon\CarbonInterface|null $login_at
  * @property bool $login_successful
- * @property \Illuminate\Support\Carbon|null $logout_at
- * @property \Illuminate\Support\Carbon|null $last_activity_at
+ * @property \Carbon\CarbonInterface|null $logout_at
+ * @property \Carbon\CarbonInterface|null $last_activity_at
  * @property bool $cleared_by_user
  * @property array|null $location
  * @property bool $is_suspicious

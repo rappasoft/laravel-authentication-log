@@ -2,6 +2,22 @@
 
 All notable changes to `Laravel Authentication Log` will be documented in this file.
 
+### 6.1.0 - 2026-06-10
+
+#### Added
+- Laravel 13.x support (#138, #140)
+- Regression test covering applications that use immutable date casting
+
+#### Changed
+- `lastLoginAt()`, `lastSuccessfulLoginAt()`, and `previousLoginAt()` now return `\Carbon\CarbonInterface` instead of `\Illuminate\Support\Carbon`, fixing a `TypeError` in applications that cast model dates to `CarbonImmutable` — the default in the current Laravel starter kits (#137)
+- PHP 8.2+ is now required (PHP 8.1 is EOL, and no Laravel version supported by this package runs on it)
+- Modernized the PHPUnit configuration for PHPUnit 10+ and updated the CI matrix (PHP 8.2–8.4, Laravel 11.x–13.x)
+
+### 6.0.1 - 2025-12-08
+
+#### Fixed
+- The upgrade migration's `down()` method now respects the configured table name (#135, #136)
+
 ### 6.0.0 - 2025-01-27
 
 #### Added

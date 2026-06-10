@@ -41,8 +41,9 @@ See the [documentation](https://rappasoft.com/docs/laravel-authentication-log) f
  10.x     | 3.x               | Basic logging only
  11.x     | 5.x, 6.x          | All features (device fingerprinting, suspicious activity, webhooks, session management, etc.)
  12.x     | 5.x, 6.x          | All features (device fingerprinting, suspicious activity, webhooks, session management, etc.)
+ 13.x     | 6.1+              | All features (device fingerprinting, suspicious activity, webhooks, session management, etc.)
 
-**Note:** Version 6.x requires Laravel 11.x or 12.x and PHP 8.1+. Version 5.x also supports Laravel 11.x and 12.x. For Laravel 10.x support, please use version 3.x.
+**Note:** Version 6.1+ requires Laravel 11.x, 12.x, or 13.x and PHP 8.2+. Version 5.x also supports Laravel 11.x and 12.x. For Laravel 10.x support, please use version 3.x.
 
 ## Installation
 

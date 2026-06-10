@@ -63,7 +63,7 @@ The following columns will be added to your `authentication_log` table:
 
 ## Requirements
 
-**Version 6.x requires Laravel 11.x or 12.x.**
+**Version 6.x requires Laravel 11.x, 12.x, or 13.x.** (Laravel 13.x support requires version 6.1+ and PHP 8.2+.)
 
 If you're still using Laravel 10.x, please continue using version 5.x of this package. Version 6.x is a major release that drops support for Laravel 10.x to simplify the codebase and take advantage of Laravel 11+ features.
 
@@ -108,7 +108,7 @@ This is **expected behavior**. Only new authentication logs created after the up
    ```bash
    php artisan --version
    ```
-   New features require Laravel 11.x or 12.x.
+   New features require Laravel 11.x, 12.x, or 13.x.
 
 2. **Verify migrations ran successfully:**
    ```bash
