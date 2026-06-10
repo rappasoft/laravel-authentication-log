@@ -50,7 +50,7 @@ The following columns will be added to your `authentication_log` table:
 
 ### Requirements
 
-**Version 6.x requires Laravel 11.x or 12.x.**
+**Version 6.x requires Laravel 11.x, 12.x, or 13.x.** (Laravel 13.x support requires version 6.1+ and PHP 8.2+.)
 
 If you're still using Laravel 10.x, please continue using version 5.x of this package.
 
@@ -76,7 +76,7 @@ This is expected. Only new authentication logs will have device fingerprints. Ex
 
 **Issue: Features not working after upgrade**
 
-- Ensure you're running Laravel 11.x or 12.x for new features
+- Ensure you're running Laravel 11.x, 12.x, or 13.x for new features
 - Check that migrations ran successfully: `php artisan migrate:status`
 - Clear config cache: `php artisan config:clear`
 
