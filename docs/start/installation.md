@@ -5,8 +5,8 @@ weight: 1
 
 ## Requirements
 
-- PHP 8.1 or higher
-- Laravel 11.x or 12.x
+- PHP 8.2 or higher
+- Laravel 11.x, 12.x, or 13.x
 
 **Note:** For Laravel 10.x support, please use version 3.x of this package.
 

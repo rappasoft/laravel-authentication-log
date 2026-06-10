@@ -71,3 +71,22 @@ it('can get last successful login ip', function () {
 
     expect($user->lastSuccessfulLoginIp())->toBe('192.168.1.2');
 });
+
+it('supports applications using immutable date casting', function () {
+    \Illuminate\Support\Facades\Date::use(\Carbon\CarbonImmutable::class);
+
+    try {
+        $user = TestUser::factory()->create();
+
+        AuthenticationLog::factory()->create([
+            'authenticatable_type' => get_class($user),
+            'authenticatable_id' => $user->id,
+            'login_at' => now()->subDay(),
+        ]);
+
+        expect($user->lastLoginAt())->toBeInstanceOf(\Carbon\CarbonImmutable::class);
+        expect($user->lastSuccessfulLoginAt())->toBeInstanceOf(\Carbon\CarbonImmutable::class);
+    } finally {
+        \Illuminate\Support\Facades\Date::useDefault();
+    }
+});
