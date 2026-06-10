@@ -82,6 +82,7 @@ it('supports applications using immutable date casting', function () {
             'authenticatable_type' => get_class($user),
             'authenticatable_id' => $user->id,
             'login_at' => now()->subDay(),
+            'login_successful' => true,
         ]);
 
         expect($user->lastLoginAt())->toBeInstanceOf(\Carbon\CarbonImmutable::class);
