@@ -60,11 +60,17 @@ class LoginListener
             $isSessionRestoration = false;
             if (config('authentication-log.prevent_session_restoration_logging', true)) {
                 $restorationWindow = config('authentication-log.session_restoration_window_minutes', 5);
+                // Measure the window against the session's most recent activity, not its
+                // original login_at. last_activity_at is bumped on every restoration below,
+                // so anchoring the lookup on login_at made a continuously-active session
+                // "age out" of the window and spawn a brand-new log row every
+                // $restorationWindow minutes for as long as the user stayed active.
                 $existingActiveSession = $user->authentications()
                     ->fromDevice($deviceId)
                     ->successful()
                     ->whereNull('logout_at')
-                    ->where('login_at', '>', now()->subMinutes($restorationWindow))
+                    ->where('last_activity_at', '>', now()->subMinutes($restorationWindow))
+                    ->orderByDesc('last_activity_at')
                     ->first();
 
                 if ($existingActiveSession) {
