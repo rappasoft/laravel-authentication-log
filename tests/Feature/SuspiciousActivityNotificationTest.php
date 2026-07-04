@@ -107,6 +107,9 @@ it('sends notification for rapid location changes during login', function () {
         'authenticatable_id' => $user->id,
         'login_successful' => true,
         'login_at' => now()->subMinutes(30),
+        // Pin last activity outside the restoration window — the factory randomizes
+        // it, and a recent value would make the login below a session restoration.
+        'last_activity_at' => now()->subMinutes(30),
         'ip_address' => $sameIp,
         'user_agent' => $sameUserAgent,
         'device_id' => $deviceId,
@@ -123,6 +126,7 @@ it('sends notification for rapid location changes during login', function () {
         'authenticatable_id' => $user->id,
         'login_successful' => true,
         'login_at' => now()->subMinutes(20),
+        'last_activity_at' => now()->subMinutes(20),
         'ip_address' => $sameIp,
         'user_agent' => $sameUserAgent,
         'device_id' => $deviceId,
@@ -173,6 +177,9 @@ it('sends notification for unusual login times when enabled', function () {
         'authenticatable_id' => $user->id,
         'login_successful' => true,
         'login_at' => $testTime->copy()->subMinutes(30),
+        // Pin last activity outside the restoration window — the factory randomizes
+        // it, and a recent value would make the login below a session restoration.
+        'last_activity_at' => $testTime->copy()->subMinutes(30),
         'ip_address' => $sameIp,
         'user_agent' => $sameUserAgent,
         'device_id' => $deviceId,
@@ -220,6 +227,9 @@ it('does not send notification for unusual login times when check is disabled', 
         'authenticatable_id' => $user->id,
         'login_successful' => true,
         'login_at' => $testTime->copy()->subMinutes(30),
+        // Pin last activity outside the restoration window — the factory randomizes
+        // it, and a recent value would make the login below a session restoration.
+        'last_activity_at' => $testTime->copy()->subMinutes(30),
         'ip_address' => $sameIp,
         'user_agent' => $sameUserAgent,
         'device_id' => $deviceId,
@@ -385,6 +395,9 @@ it('does not send notification for rapid location change when locations are same
         'authenticatable_id' => $user->id,
         'login_successful' => true,
         'login_at' => now()->subMinutes(30),
+        // Pin last activity outside the restoration window — the factory randomizes
+        // it, and a recent value would make the login below a session restoration.
+        'last_activity_at' => now()->subMinutes(30),
         'ip_address' => $sameIp,
         'user_agent' => $sameUserAgent,
         'device_id' => $deviceId,
@@ -401,6 +414,7 @@ it('does not send notification for rapid location change when locations are same
         'authenticatable_id' => $user->id,
         'login_successful' => true,
         'login_at' => now()->subMinutes(20),
+        'last_activity_at' => now()->subMinutes(20),
         'ip_address' => $sameIp,
         'user_agent' => $sameUserAgent,
         'device_id' => $deviceId,
