@@ -2,6 +2,12 @@
 
 All notable changes to `Laravel Authentication Log` will be documented in this file.
 
+### 6.1.1 - 2026-07-04
+
+#### Fixed
+- Session restoration detection now uses `last_activity_at` so continuously active sessions do not create duplicate login rows after the original `login_at` leaves the restoration window (#146)
+- Recent active legacy rows with a null `last_activity_at` still fall back to `login_at` during restoration detection
+
 ### 6.1.0 - 2026-06-10
 
 #### Added

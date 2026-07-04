@@ -96,6 +96,31 @@ it('keeps one log entry for a session that stays active past its original login 
     expect($log->last_activity_at->timestamp)->toBeGreaterThan(now()->subMinute()->timestamp);
 });
 
+it('restores recent legacy active sessions with null last activity', function () {
+    config(['authentication-log.prevent_session_restoration_logging' => true]);
+    config(['authentication-log.session_restoration_window_minutes' => 5]);
+
+    $user = TestUser::factory()->create();
+
+    request()->server->set('REMOTE_ADDR', '192.168.1.1');
+    request()->headers->set('User-Agent', 'Test Browser');
+
+    $log = AuthenticationLog::factory()->create([
+        'authenticatable_type' => get_class($user),
+        'authenticatable_id' => $user->id,
+        'device_id' => \Rappasoft\LaravelAuthenticationLog\Helpers\DeviceFingerprint::generate(request()),
+        'login_at' => now()->subMinutes(2),
+        'login_successful' => true,
+        'logout_at' => null,
+        'last_activity_at' => null,
+    ]);
+
+    Event::dispatch(new Login('web', $user, false));
+
+    expect(AuthenticationLog::where('authenticatable_id', $user->id)->count())->toBe(1);
+    expect($log->refresh()->last_activity_at)->not->toBeNull();
+});
+
 it('creates new log entry if existing session is outside restoration window', function () {
     config(['authentication-log.prevent_session_restoration_logging' => true]);
     config(['authentication-log.session_restoration_window_minutes' => 5]);
