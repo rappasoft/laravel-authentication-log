@@ -66,6 +66,61 @@ it('creates new log entry if session restoration prevention is disabled', functi
     expect($afterRestorationCount)->toBe(2);
 });
 
+it('keeps one log entry for a session that stays active past its original login window', function () {
+    config(['authentication-log.prevent_session_restoration_logging' => true]);
+    config(['authentication-log.session_restoration_window_minutes' => 5]);
+
+    $user = TestUser::factory()->create();
+
+    request()->server->set('REMOTE_ADDR', '192.168.1.1');
+    request()->headers->set('User-Agent', 'Test Browser');
+
+    Event::dispatch(new Login('web', $user, false));
+    expect(AuthenticationLog::where('authenticatable_id', $user->id)->count())->toBe(1);
+
+    // The session has been active for ~6 minutes: its original login_at is now
+    // older than the 5-minute window, but restorations kept last_activity_at fresh.
+    // Anchoring the lookup on login_at (the bug) would spawn a second row here.
+    $log = AuthenticationLog::where('authenticatable_id', $user->id)->first();
+    $log->update([
+        'login_at' => now()->subMinutes(6),
+        'last_activity_at' => now()->subMinute(),
+    ]);
+
+    Event::dispatch(new Login('web', $user, false));
+
+    // Still one entry — the active session is recognized via last_activity_at.
+    expect(AuthenticationLog::where('authenticatable_id', $user->id)->count())->toBe(1);
+
+    $log->refresh();
+    expect($log->last_activity_at->timestamp)->toBeGreaterThan(now()->subMinute()->timestamp);
+});
+
+it('restores recent legacy active sessions with null last activity', function () {
+    config(['authentication-log.prevent_session_restoration_logging' => true]);
+    config(['authentication-log.session_restoration_window_minutes' => 5]);
+
+    $user = TestUser::factory()->create();
+
+    request()->server->set('REMOTE_ADDR', '192.168.1.1');
+    request()->headers->set('User-Agent', 'Test Browser');
+
+    $log = AuthenticationLog::factory()->create([
+        'authenticatable_type' => get_class($user),
+        'authenticatable_id' => $user->id,
+        'device_id' => \Rappasoft\LaravelAuthenticationLog\Helpers\DeviceFingerprint::generate(request()),
+        'login_at' => now()->subMinutes(2),
+        'login_successful' => true,
+        'logout_at' => null,
+        'last_activity_at' => null,
+    ]);
+
+    Event::dispatch(new Login('web', $user, false));
+
+    expect(AuthenticationLog::where('authenticatable_id', $user->id)->count())->toBe(1);
+    expect($log->refresh()->last_activity_at)->not->toBeNull();
+});
+
 it('creates new log entry if existing session is outside restoration window', function () {
     config(['authentication-log.prevent_session_restoration_logging' => true]);
     config(['authentication-log.session_restoration_window_minutes' => 5]);
@@ -76,7 +131,7 @@ it('creates new log entry if existing session is outside restoration window', fu
     request()->server->set('REMOTE_ADDR', '192.168.1.1');
     request()->headers->set('User-Agent', 'Test Browser');
 
-    // Create an old login (outside the window)
+    // Create an old session whose last activity is outside the window
     $oldLog = AuthenticationLog::factory()->create([
         'authenticatable_type' => get_class($user),
         'authenticatable_id' => $user->id,
@@ -84,6 +139,7 @@ it('creates new log entry if existing session is outside restoration window', fu
         'login_at' => now()->subMinutes(10),
         'login_successful' => true,
         'logout_at' => null,
+        'last_activity_at' => now()->subMinutes(10),
     ]);
 
     $initialCount = AuthenticationLog::where('authenticatable_id', $user->id)->count();
@@ -166,9 +222,9 @@ it('respects configurable restoration window', function () {
     $initialCount = AuthenticationLog::where('authenticatable_id', $user->id)->count();
     expect($initialCount)->toBe(1);
 
-    // Create an old login (outside the 1-minute window)
+    // Age the session's last activity outside the 1-minute window
     $oldLog = AuthenticationLog::where('authenticatable_id', $user->id)->first();
-    $oldLog->update(['login_at' => now()->subMinutes(2)]);
+    $oldLog->update(['login_at' => now()->subMinutes(2), 'last_activity_at' => now()->subMinutes(2)]);
 
     // New login (outside 1-minute window) - should create new entry
     Event::dispatch(new Login('web', $user, false));
