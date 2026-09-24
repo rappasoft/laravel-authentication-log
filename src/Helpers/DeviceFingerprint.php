@@ -51,24 +51,60 @@ class DeviceFingerprint
         return $normalized;
     }
 
+    /**
+     * Browser patterns, ordered from most to least specific.
+     * Most browsers also advertise the tokens of the engine they are based on
+     * (e.g. Edge contains "Chrome" and "Safari", Chrome on iOS only contains "CriOS" and "Safari"),
+     * so the order matters.
+     */
+    protected const BROWSERS = [
+        'Edge' => '/Edge?\/|EdgA\/|EdgiOS\//i',
+        'Opera' => '/OPR\/|OPiOS\/|Opera/i',
+        'Firefox' => '/Firefox\/|FxiOS\//i',
+        'Chrome' => '/Chrome\/|CriOS\//i',
+        'Safari' => '/Safari/i',
+        'MSIE' => '/MSIE/i',
+        'Trident' => '/Trident/i',
+    ];
+
+    /**
+     * OS patterns, ordered from most to least specific.
+     * iOS user agents contain "like Mac OS X" and Android user agents contain "Linux",
+     * so they must be checked first.
+     */
+    protected const OPERATING_SYSTEMS = [
+        'iPad' => '/iPad/i',
+        'iPhone' => '/iPhone/i',
+        'iOS' => '/iOS/i',
+        'Android' => '/Android/i',
+        'Windows' => '/Windows/i',
+        'Mac' => '/Mac/i',
+        'Linux' => '/Linux/i',
+    ];
+
     public static function generateDeviceName(Request $request): string
     {
-        $userAgent = $request->userAgent();
+        $userAgent = (string) $request->userAgent();
 
-        // Try to extract browser name
-        if (preg_match('/(Chrome|Firefox|Safari|Edge|Opera|MSIE|Trident)/i', $userAgent, $matches)) {
-            $browser = $matches[1];
-        } else {
-            $browser = 'Unknown Browser';
-        }
-
-        // Try to extract OS
-        if (preg_match('/(Windows|Mac|Linux|Android|iOS|iPhone|iPad)/i', $userAgent, $matches)) {
-            $os = $matches[1];
-        } else {
-            $os = 'Unknown OS';
-        }
+        $browser = self::firstMatch(self::BROWSERS, $userAgent) ?? 'Unknown Browser';
+        $os = self::firstMatch(self::OPERATING_SYSTEMS, $userAgent) ?? 'Unknown OS';
 
         return "{$browser} on {$os}";
+    }
+
+    /**
+     * Return the name of the first pattern matching the user agent.
+     *
+     * @param  array<string, string>  $patterns
+     */
+    protected static function firstMatch(array $patterns, string $userAgent): ?string
+    {
+        foreach ($patterns as $name => $pattern) {
+            if (preg_match($pattern, $userAgent)) {
+                return $name;
+            }
+        }
+
+        return null;
     }
 }
