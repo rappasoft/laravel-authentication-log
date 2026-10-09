@@ -12,6 +12,7 @@ Laravel Authentication Log is a comprehensive package which tracks your user's a
 ### Core Features
 - ✅ **Authentication Logging** - Tracks all login/logout attempts with IP, user agent, location, and timestamps
 - ✅ **Device Fingerprinting** - Reliable device identification using SHA-256 hashing with browser version normalization (prevents false positives)
+- ✅ **Device Names** - Recognizes browser-specific desktop and iOS user agents without changing device fingerprints
 - ✅ **New Device Detection** - Automatically detects and notifies users of new device logins
 - ✅ **Failed Login Tracking** - Logs and optionally notifies users of failed login attempts
 - ✅ **Location Tracking** - Optional GeoIP integration for location data
@@ -44,6 +45,8 @@ See the [documentation](https://rappasoft.com/docs/laravel-authentication-log) f
  13.x     | 6.1+              | All features (device fingerprinting, suspicious activity, webhooks, session management, etc.)
 
 **Note:** Version 6.1+ requires Laravel 11.x, 12.x, or 13.x and PHP 8.2+. Version 5.x also supports Laravel 11.x and 12.x. For Laravel 10.x support, please use version 3.x.
+
+For new installations, use an updated Laravel 12.x or 13.x release. Laravel 11 compatibility is retained, but its unpatched framework security advisories can block Composer installation; see the [installation requirements](docs/start/installation.md).
 
 ## Installation
 

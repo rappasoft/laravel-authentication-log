@@ -2,6 +2,19 @@
 
 All notable changes to `Laravel Authentication Log` will be documented in this file.
 
+### Unreleased
+
+#### Fixed
+- Generated device names now correctly identify Chrome, Firefox, Edge, and Opera on iOS, Chromium-based Edge and Opera, and Android devices (#148). Device fingerprints and existing stored names are unchanged.
+- Missing user agents now return the unknown browser and OS label without a PHP deprecation.
+
+#### Changed
+- Updated GitHub Actions and added PHP 8.5 to the test matrix.
+- Added support for Pest 5 while keeping Pest 3 and 4 available for older PHP versions.
+
+#### Compatibility
+- Laravel 11 compatibility is retained. Its framework has unpatched security advisories; use an updated Laravel 12.x or 13.x release for security fixes.
+
 ### 6.1.1 - 2026-07-04
 
 #### Fixed

@@ -165,7 +165,7 @@ it('generates device name from user agent', function () {
     expect($deviceName)->toContain('Windows');
 });
 
-it('detects browser and OS from user agent', function (string $userAgent, string $expected) {
+it('detects browser and OS from user agent', function (?string $userAgent, string $expected) {
     request()->headers->set('User-Agent', $userAgent);
 
     expect(DeviceFingerprint::generateDeviceName(request()))->toBe($expected);
@@ -184,6 +184,12 @@ it('detects browser and OS from user agent', function (string $userAgent, string
     'Edge on Android' => ['Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36 EdgA/120.0.2210.84', 'Edge on Android'],
     'Edge on iPhone' => ['Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 EdgiOS/120.0.2210.126 Mobile/15E148 Safari/605.1.15', 'Edge on iPhone'],
     'Opera on Windows' => ['Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 OPR/106.0.0.0', 'Opera on Windows'],
+    'Legacy Edge on Windows' => ['Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/42.0.2311.135 Safari/537.36 Edge/12.246', 'Edge on Windows'],
+    'Opera on iPhone' => ['Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 OPiOS/2.2.0 Mobile/15E148 Safari/605.1.15', 'Opera on iPhone'],
+    'Internet Explorer 10' => ['Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)', 'MSIE on Windows'],
+    'Internet Explorer 11' => ['Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko', 'Trident on Windows'],
+    'Empty' => ['', 'Unknown Browser on Unknown OS'],
+    'Missing' => [null, 'Unknown Browser on Unknown OS'],
     'Unknown' => ['Test Browser', 'Unknown Browser on Unknown OS'],
 ]);
 
