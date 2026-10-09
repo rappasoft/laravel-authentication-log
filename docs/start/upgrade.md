@@ -65,7 +65,7 @@ The following columns will be added to your `authentication_log` table:
 
 **Version 6.x requires Laravel 11.x, 12.x, or 13.x.** (Laravel 13.x support requires version 6.1+ and PHP 8.2+.)
 
-If you're still using Laravel 10.x, please continue using version 5.x of this package. Version 6.x is a major release that drops support for Laravel 10.x to simplify the codebase and take advantage of Laravel 11+ features.
+If you're still using Laravel 10.x, please continue using version 3.x of this package. Version 6.x requires Laravel 11.x or newer.
 
 ## What Happens to Existing Data?
 

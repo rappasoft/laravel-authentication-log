@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        php: [8.2, 8.3, 8.4]
+        php: [8.2, 8.3, 8.4, 8.5]
         laravel: ["11.*", "12.*", "13.*"]
         stability: [prefer-lowest, prefer-stable]
         include:
@@ -36,7 +36,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -49,6 +49,12 @@ jobs:
         run: |
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Allow known upstream advisories for Laravel 11 compatibility tests
+        if: matrix.laravel == '11.*'
+        shell: bash
+        run: >-
+          composer config audit.ignore --json '{"PKSA-d5tc-s1qs-h781":"Laravel 11 compatibility tests only; upgrade production to patched Laravel 12 or 13.","PKSA-m5cs-t1y6-qpcs":"Laravel 11 compatibility tests only; upgrade production to patched Laravel 12 or 13.","PKSA-3r5d-mb8f-1qw9":"Laravel 11 compatibility tests only; upgrade production to patched Laravel 12 or 13.","PKSA-mdq4-51ck-6kdq":"Laravel 11 compatibility tests only; upgrade production to patched Laravel 12 or 13."}'
 
       - name: Install dependencies
         run: |

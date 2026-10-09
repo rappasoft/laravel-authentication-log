@@ -2,6 +2,20 @@
 
 All notable changes to `Laravel Authentication Log` will be documented in this file.
 
+### 6.1.2 - 2026-10-09
+
+#### Fixed
+- Generated device names now correctly identify Chrome, Firefox, Edge, and Opera on iOS, Chromium-based Edge and Opera, and Android devices (#148, thanks @lbeauvisage). Device fingerprints and existing stored names are unchanged.
+- Missing user agents now return the unknown browser and OS label without a PHP deprecation.
+
+#### Changed
+- Updated GitHub Actions and added PHP 8.5 to the test matrix.
+- Added support for Pest 5 while keeping Pest 3 and 4 available for older PHP versions.
+- Dependency resolution now defaults to stable releases. Laravel 11 CI allows only its known, unpatched upstream advisories in the temporary test installation.
+
+#### Compatibility
+- Laravel 11 compatibility is retained, but the framework is end of life and has unpatched security advisories. Production applications should use patched Laravel 12.69+ or 13.30+ releases. The test-only advisory exceptions do not disable Composer security blocking for applications using this package.
+
 ### 6.1.1 - 2026-07-04
 
 #### Fixed

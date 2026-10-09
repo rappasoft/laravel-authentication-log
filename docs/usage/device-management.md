@@ -17,6 +17,10 @@ When a user logs in, the package automatically:
 3. Checks if the device has been seen before
 4. Stores the device information with the authentication log
 
+Generated names recognize Chrome, Firefox, Edge, Opera, and Safari, including their iOS user agents. Browser-specific tokens take precedence over shared engine tokens, and Android and iOS take precedence over Linux and Mac. Unrecognized browser and OS tokens use `Unknown Browser` and `Unknown OS` respectively; a missing user agent produces `Unknown Browser on Unknown OS`.
+
+Device names are display labels. Improved name detection does not change existing `device_id` fingerprints, device trust, or new-device notifications. Existing stored names remain until a new log is created or you call `updateDeviceName()`.
+
 ## Getting User Devices
 
 Get all devices that have been used by a user:

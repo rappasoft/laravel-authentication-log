@@ -8,6 +8,8 @@ weight: 1
 - PHP 8.2 or higher
 - Laravel 11.x, 12.x, or 13.x
 
+Use Laravel 12.69+ or 13.30+ for new installations. Laravel 11 compatibility is retained, but it has reached the end of security support and its framework has unpatched [email validation](https://github.com/laravel/framework/security/advisories/GHSA-5vg9-5847-vvmq), [signed URL](https://github.com/advisories/GHSA-crmm-hgp2-wgrp), and [debug page](https://github.com/advisories/GHSA-jh5r-qr3c-85q8) advisories. Composer security checks may reject Laravel 11 installations; upgrading the framework is the remedy.
+
 **Note:** For Laravel 10.x support, please use version 3.x of this package.
 
 ## Installation
